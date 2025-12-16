@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎭 Portal de Eventos Culturais - Rio de Janeiro
 
-## Getting Started
+Este projeto é um desafio técnico para a vaga de **Analista de Sistemas Júnior (Front-end)**.
+O objetivo é uma aplicação web para listar, visualizar e cadastrar eventos culturais, consumindo uma API simulada.
 
-First, run the development server:
+## 🚀 Tecnologias Utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Next.js 15** (App Router)
+- **React** (Hooks: useState, useEffect, Context API)
+- **Tailwind CSS** (Estilização responsiva)
+- **JavaScript ES6+**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ⚙️ Funcionalidades
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+1.  **Listagem de Eventos:** Exibe cards com nome, data e local.
+2.  **Detalhes do Evento:** Página dinâmica (`/events/[id]`) com informações completas.
+3.  **Simulação de Login (SSO):**
+    - Implementado via **Context API**.
+    - Usuário "fake" para demonstrar controle de estado global e proteção de rotas.
+4.  **Cadastro de Eventos:**
+    - Formulário simples com validação básica.
+    - Persistência em memória via API Route.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⚠️ Importante: Sobre a API e Dados
 
-## Learn More
+Como o foco do desafio é o **Front-end**, a API foi construída utilizando **Next.js API Routes** com persistência em memória (array local).
 
-To learn more about Next.js, take a look at the following resources:
+> **Nota:** Ao reiniciar o servidor (`npm run dev`), os eventos cadastrados manualmente serão resetados e voltarão ao estado inicial (mock). Isso foi uma decisão de projeto para manter a simplicidade e focar na construção da interface e fluxo de dados.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📂 Como Rodar o Projeto
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1.  Clone o repositório:
+    ```bash
+    git clone [https://github.com/marcos-lima-dev/projeto-portal-de-eventos.git](https://github.com/marcos-lima-dev/projeto-portal-de-eventos.git)
+    ```
+2.  Instale as dependências:
+    ```bash
+    npm install
+    ```
+3.  Rode o servidor de desenvolvimento:
+    ```bash
+    npm run dev
+    ```
+4.  Acesse `http://localhost:3000`.
 
-## Deploy on Vercel
+## 🛠️ Estrutura de Pastas
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+A organização segue o padrão do **Next.js App Router**:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `/app`: Páginas e Rotas (File-system routing).
+- `/app/api`: Backend simulado (Mock).
+- `/app/components`: Componentes reutilizáveis (Cards, Header, Forms).
+- `/app/context`: Gerenciamento de estado global (Auth).
+
+## 🔮 Melhorias Futuras
+
+Se houvesse mais tempo ou necessidade de escalar o projeto, os próximos passos seriam:
+
+- [ ] Implementar banco de dados real (PostgreSQL ou MySQL).
+- [ ] Autenticação real com JWT/NextAuth.
+- [ ] Testes unitários com Jest/Testing Library.
+- [ ] Paginação dos eventos diretamente no Backend.
+
+---
+Desenvolvido por **Marcos Lima**.
