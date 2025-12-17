@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-// 1. Importar o Provider que criamos
 import { AuthProvider } from "./context/AuthContext";
+import Header from "./components/Header"; // <--- IMPORTANTE: Importar o Header
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,16 +14,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
       <body className={inter.className}>
-        {/* 2. Envolver tudo com o AuthProvider */}
         <AuthProvider>
           
-          {/* Aqui vai entrar o Header jaja */}
-          <header className="p-4 bg-blue-600 text-white flex justify-between">
-            <h1 className="font-bold text-xl">RioEventos</h1>
-            {/* O botão de login vai aqui depois */}
-          </header>
+          {/* Substituímos o <header> manual pelo nosso Componente Inteligente */}
+          <Header />
 
-          <main className="p-4 container mx-auto">
+          <main className="p-4 container mx-auto min-h-screen">
             {children}
           </main>
 
