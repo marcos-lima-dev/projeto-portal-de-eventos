@@ -1,18 +1,21 @@
 // app/page.js
-"use client"; // Obrigatório: diz que essa página roda no navegador (tem cliques, efeitos)
+"use client";
 
 import { useState, useEffect } from 'react';
-import EventCard from './components/EventCard'; // Vamos criar esse já já
+import Link from 'next/link'; // Importei o Link pra botar botão de novo evento (opcional)
+import EventCard from './components/EventCard';
 
 export default function Home() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // 1. Estado para guardar o texto da busca
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // Busca os dados assim que a tela carrega
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const res = await fetch('/api/events'); // Chama nossa rota fake
+        const res = await fetch('/api/events');
         const data = await res.json();
         setEvents(data);
       } catch (error) {
@@ -21,28 +24,52 @@ export default function Home() {
         setLoading(false);
       }
     }
-
     fetchEvents();
   }, []);
 
+  // 2. Lógica de Filtro (Case insensitive: ignora maiúsculas/minúsculas)
+  const filteredEvents = events.filter((event) => {
+    const term = searchTerm.toLowerCase();
+    const nameMatch = event.name.toLowerCase().includes(term);
+    const categoryMatch = event.category.toLowerCase().includes(term);
+    return nameMatch || categoryMatch;
+  });
+
   return (
     <div className="p-4">
-      <div className="flex justify-between items-center mb-6">
+      {/* Cabeçalho com Título e Busca */}
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
         <h2 className="text-2xl font-bold text-gray-800">Próximos Eventos</h2>
-        {/* Futuro botão de "Novo Evento" entra aqui */}
+        
+        {/* 3. Input de Busca */}
+        <input 
+          type="text" 
+          placeholder="Buscar por nome ou categoria..." 
+          className="bg-white text-black border border-gray-300 p-2 rounded-lg w-full md:w-80 focus:ring-2 focus:ring-blue-500 outline-none"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </div>
 
       {loading ? (
-        <p className="text-gray-500">Carregando eventos...</p>
+        <p className="text-center text-gray-500 animate-pulse">Carregando eventos...</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {events.length > 0 ? (
-            events.map((event) => (
-              // Passamos os dados para o componente Card (que vamos criar abaixo)
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredEvents.length > 0 ? (
+            // Agora usamos o filteredEvents em vez de events
+            filteredEvents.map((event) => (
               <EventCard key={event.id} event={event} />
             ))
           ) : (
-            <p>Nenhum evento encontrado.</p>
+            <div className="col-span-full text-center text-gray-500 py-10">
+              <p className="text-lg">Nenhum evento encontrado para "<strong>{searchTerm}</strong>".</p>
+              <button 
+                onClick={() => setSearchTerm('')} 
+                className="text-blue-600 hover:underline mt-2"
+              >
+                Limpar busca
+              </button>
+            </div>
           )}
         </div>
       )}
